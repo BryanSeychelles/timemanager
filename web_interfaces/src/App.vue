@@ -116,7 +116,7 @@ import axios from 'axios'
 export default {
   name: 'App',
   data: () => ({
-    path: 'http://34.89.55.221:4000/api/users',
+    path: 'http://localhost:4000/api/users',
     userId: 1,
     user: []
   }),

@@ -20,7 +20,7 @@ export default {
   components: { Workingtimes, Clockmanager },
   data () {
     return {
-      path: 'http://34.89.55.221:4000/api/users',
+      path: 'http://localhost:4000/api/users',
       user: []
     }
   },

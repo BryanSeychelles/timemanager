@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       workingtimes: [],
-      path: "http://34.89.55.221:4000/api/workingtimes",
+      path: "http://localhost:4000/api/workingtimes",
       userId: 1,
       newDateStart: "",
       newDateEnd: "",

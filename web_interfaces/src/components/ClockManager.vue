@@ -25,7 +25,7 @@ export default {
   name: "Clockmanager",
   data() {
     return {
-      path: "http://34.89.55.221:4000/api/clocks",
+      path: "http://localhost:4000/api/clocks",
       startDateTime: this.getDate(),
       userID: 1, // current_user in future
       clock: null,
@@ -77,7 +77,7 @@ export default {
             this.clock.user_id,
             this.clock.time,
             this.getDate(),
-            "http://34.89.55.221:4000/api/workingtimes"
+            "http://localhost:4000/api/workingtimes"
           );
         } else {
           clock_start_time = this.getDate();

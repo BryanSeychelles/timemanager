@@ -21,6 +21,8 @@
                     <v-col cols="1" sm="5" md="5">
                       <v-text-field v-model="newUsername" outlined dense required label="Username"></v-text-field>
                       <v-text-field v-model="newEmail" outlined dense required label="Email"></v-text-field>
+                      <v-text-field v-model="newPassword" type="password" outlined dense required label="Password"></v-text-field>
+                      <v-text-field v-model="newPasswordConfirmation" type="password" outlined dense required label="Password Confirmation"></v-text-field>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -129,10 +131,12 @@ export default {
       users: [],
       createUserDialog: '',
       editUserDialog: '',
-      path: 'http://34.89.55.221:4000/api/users',
+      path: 'http://localhost:4000/api/users',
       user: { email: 'test@gmail.com', username: 'test' },
       newUsername: '',
       newEmail: '',
+      newPassword: '',
+      newPasswordConfirmation: '',
       userId: 3 //current_user in future
     }
   },
@@ -168,7 +172,9 @@ export default {
         .post(this.path, {
           user: {
             username: this.newUsername,
-            email: this.newEmail
+            email: this.newEmail,
+            password: this.newPassword,
+            password_confirmation: this.newPasswordConfirmation
           }
         })
         .then((response) => {
@@ -209,6 +215,7 @@ export default {
           console.log(response.data)
           location.reload()
         })
+        .catch(err => console.log(err.message))
     },
     closeEditUserDialog (){
       this.editUserDialog = false
