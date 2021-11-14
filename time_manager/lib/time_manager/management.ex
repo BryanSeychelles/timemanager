@@ -9,6 +9,7 @@ defmodule TimeManager.Management do
   alias TimeManager.Repo
   alias TimeManager.Management.User
   alias TimeManager.Management.UserTeam
+  alias TimeManager.Management.Team
   alias TimeManagerWeb.Guardian
 
   @doc """
@@ -275,6 +276,17 @@ defmodule TimeManager.Management do
     Repo.all(query)
   end
 
+  def list_workingtimes_by_team(team_id) do
+    Repo.all(
+      from t in Team,
+      where: t.id == ^team_id,
+      join: ut in UserTeam, on: t.id == ut.team_id,
+      join: u in User, on: u.id == ut.user_id,
+      join: w in Workingtime, on: w.user_id == u.id,
+      select: %{id: w.id, start: w.start, end: w.end, user_id: w.user_id}
+    )
+  end
+
   def list_workingtimes_by_user_and_id(user_id, id) do
     query = from w in Workingtime, where: w.user_id == ^user_id and w.id == ^id
     Repo.all(query)
@@ -365,8 +377,6 @@ defmodule TimeManager.Management do
   def change_workingtime(%Workingtime{} = workingtime, attrs \\ %{}) do
     Workingtime.changeset(workingtime, attrs)
   end
-
-  alias TimeManager.Management.Team
 
   @doc """
   Returns the list of teams.
