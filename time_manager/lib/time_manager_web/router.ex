@@ -21,7 +21,17 @@ defmodule TimeManagerWeb.Router do
   scope "/api", TimeManagerWeb do
     pipe_through [:api, :jwt_authenticated]
 
-    get "/users", UserController, :show
+    scope "/users" do
+      get "/", UserController, :show
+      get "/all", UserController, :index
+      get "/:userID", UserController, :show
+      put "/:userID", UserController, :update
+      put "/:userID/promote", UserController, :promote
+      delete "/:userID", UserController, :delete
+      options "/", UserController, :options
+      options "/:userID", UserController, :options
+      options "/:userID/promote", UserController, :options
+    end
   end
 
   # Other scopes may use custom stacks.
@@ -29,17 +39,9 @@ defmodule TimeManagerWeb.Router do
     pipe_through :api
 
     scope "/users" do
-      get "/all", UserController, :index
-      get "/:userID", UserController, :show
       post "/", UserController, :create
       post "/sign_in", UserController, :sign_in
-      put "/:userID", UserController, :update
-      delete "/:userID", UserController, :delete
-      options "/", UserController, :options
-      options "/:userID", UserController, :options
       options "/sign_in", UserController, :options
-      put "/:userID/promote", UserController, :promote
-      options "/:userID/promote", UserController, :options
     end
 
     scope "/workingtimes" do

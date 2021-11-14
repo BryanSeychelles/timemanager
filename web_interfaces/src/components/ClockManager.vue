@@ -33,7 +33,7 @@ export default {
     };
   },
   mounted() {
-    this.getClock(userId)
+    this.getClock(this.userID)
   },
   methods: {
     async getClock(UserID) {

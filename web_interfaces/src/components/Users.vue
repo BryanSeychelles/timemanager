@@ -132,19 +132,19 @@ export default {
       createUserDialog: '',
       editUserDialog: '',
       path: 'http://localhost:4000/api/users',
-      user: { email: 'test@gmail.com', username: 'test' },
+      token: localStorage.getItem("user_token"),
+      user: localStorage.getItem("user"),
       newUsername: '',
       newEmail: '',
       newPassword: '',
-      newPasswordConfirmation: '',
-      userId: 3 //current_user in future
+      newPasswordConfirmation: ''
     }
   },
   mounted (){
     this.getAllUsers()
   },
   methods: {
-    getAllUsers (){
+    getAllUsers () {
       axios
         .get(this.path + '/all')
         .then((response) => {
@@ -153,9 +153,9 @@ export default {
         })
         .catch(err => console.log(err.message))
     },
-    getUserById (){
+    getUserById () {
       axios
-        .get(this.path + '/' + this.userId)
+        .get(this.path + '/' + this.user.id)
         .then((response) => {
           console.log(response.data)
         })
