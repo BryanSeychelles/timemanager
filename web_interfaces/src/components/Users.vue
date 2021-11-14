@@ -149,7 +149,9 @@ export default {
   methods: {
     getAllUsers () {
       axios
-        .get(this.path + '/all')
+        .get(this.path + '/all', {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
         .then((response) => {
           console.log(response.data.data)
           this.users = response.data.data

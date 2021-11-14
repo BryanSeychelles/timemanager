@@ -2,7 +2,7 @@
   <v-container class="mt-4">
     <v-container class="text-center mb-8">
       <h2>DashBoard de {{this.user.username}}</h2>
-      <clockmanager/>
+      <clockmanager v-if="this.current_user.id == this.$route.params.id"/>
       <v-btn class="ma-4" color="green" dark elevation="2" x-large>Start</v-btn>
       <v-btn class="ma-4" color="red" dark elevation="2" x-large>End</v-btn>
     </v-container>
@@ -22,7 +22,8 @@ export default {
     return {
       path: 'http://localhost:4000/api/users',
       user: [],
-      token: localStorage.getItem("user_token")
+      token: localStorage.getItem("user_token"),
+      current_user: localStorage.getItem("user")
     }
   },
   mounted () {
