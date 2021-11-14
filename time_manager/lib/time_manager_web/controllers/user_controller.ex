@@ -5,7 +5,7 @@ defmodule TimeManagerWeb.UserController do
   alias TimeManager.Management.User
   alias TimeManagerWeb.Guardian
 
-  action_fallback TimeManagerWeb.FallbackController
+  action_fallback(TimeManagerWeb.FallbackController)
 
   def index(conn, _params) do
     users = Management.list_users()
@@ -18,8 +18,14 @@ defmodule TimeManagerWeb.UserController do
   end
 
   def show(conn, %{"userID" => id}) do
-    user = Management.get_user!(id)
-    render(conn, "show.json", user: user)
+    request_user = Guardian.Plug.current_resource(conn)
+    case request_user.id == id do
+      true ->
+        user = Management.get_user!(id)
+        render(conn, "show.json", user: user)
+      false ->
+        {:error, :unauthorized}
+    end
   end
 
   def show_users_of_team(conn, %{"id" => id}) do
@@ -32,10 +38,10 @@ defmodule TimeManagerWeb.UserController do
     render(conn, "index.json", users: users)
   end
 
-  def show(conn, _) do
-    user = Guardian.Plug.current_resource(conn)
-    conn |> render("user.json", user: user)
- end
+  def show(conn, _params) do
+    request_user = Guardian.Plug.current_resource(conn)
+    conn |> render("user.json", user: request_user)
+  end
 
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Management.create_user(user_params) do

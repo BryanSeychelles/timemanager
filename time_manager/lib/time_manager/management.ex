@@ -5,7 +5,6 @@ defmodule TimeManager.Management do
 
   import Ecto.Query, warn: false
   import Bcrypt
-  import Comeonin.Bcrypt, only: [dummy_checkpw: 0]
 
   alias TimeManager.Repo
   alias TimeManager.Management.User
@@ -33,7 +32,7 @@ defmodule TimeManager.Management do
   defp get_by_email(email) when is_binary(email) do
     case Repo.get_by(User, email: email) do
       nil ->
-        dummy_checkpw()
+        no_user_verify()
         {:error, "Login error."}
       user ->
         {:ok, user}

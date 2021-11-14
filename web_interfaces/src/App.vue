@@ -61,7 +61,7 @@
         <v-list>
           <v-list-item>
             <v-list-item-action>
-              <v-btn small v-on:click="" color="white">
+              <v-btn small v-on:click="sign_out()" color="white">
                 <v-icon small color="red" class="mr-2">fas fa-sign-out-alt</v-icon>
                 <span>Sign out</span>
               </v-btn>
@@ -122,7 +122,7 @@ export default {
     user: []
   }),
   mounted (){
-    this.getUser(this.userId) // TO DO : current_user_id
+    //this.getUser(this.userId) // TO DO : current_user_id
   },
   methods: {
     getUser (id){
@@ -130,7 +130,15 @@ export default {
         .get(this.path + '/' + id)
         .then((response) => {
           this.user = response.data.data
+          console.log("user data")
+          console.log(response.data.data)
         })
+    },
+    sign_out() {
+      localStorage.removeItem("user")
+      localStorage.removeItem("user_token")
+      this.$router.push("/users/sign_in");
+      location.reload()
     }
   }
 };

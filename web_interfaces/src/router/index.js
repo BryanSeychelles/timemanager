@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Dashboard from '@/components/Dashboard'
 import WorkingTimes from '@/components/WorkingTimes'
 import Users from '@/components/Users'
+import Login from '@/components/Login'
 import Manage from '@/components/Manage'
 import ClockManager from '@/components/ClockManager'
 import ChartManager from '@/components/ChartManager'
@@ -11,6 +12,11 @@ Vue.use(VueRouter)
 
 export default new VueRouter({
   routes: [
+    {
+      path: '/users/sign_in',
+      name: 'Login',
+      component: Login
+    },
     {
       path: '/users/:id',
       name: 'Dashboard',
