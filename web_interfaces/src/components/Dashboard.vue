@@ -21,33 +21,24 @@ export default {
   data () {
     return {
       path: 'http://localhost:4000/api/users',
-      user: [],
-      token: localStorage.getItem("user_token")
+      token: localStorage.getItem("user_token"),
+      user: localStorage.getItem("user"),
+      dashboard_user: [],
+      dashboard_user_id: 2 //click on show
     }
   },
   mounted () {
-    this.getUserByToken()
+    this.getUserById()
   },
   methods: {
-    /*getUser (id){
+    getUserById () {
       axios
-        .get(this.path + '/' + id)
-        .then((response) => {
-          this.user = response.data.data
-          console.log(response.data.data)
-          locate.reload()
-        })
-    },*/
-    async getUserByToken() {
-      const response = await axios
-        .get("http://localhost:4000/api/users/", {
+        .get(this.path + '/' + this.dashboard_user_id, {
           headers: { Authorization: `Bearer ${this.token}` },
         })
-        .catch((error) => console.log(error));
-      this.user = response.data;
-      console.log("USER: ");
-      console.log(this.user);
-      console.log(this.user.id);
+        .then((response) => {
+          console.log(response.data)
+        })
     }
   }
 }
