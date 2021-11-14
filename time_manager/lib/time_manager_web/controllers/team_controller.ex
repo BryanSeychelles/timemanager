@@ -19,6 +19,10 @@ defmodule TimeManagerWeb.TeamController do
       |> render("show.json", team: team)
     end
   end
+
+  def add_user_in_team(conn, %{"id" => id, "user_id" => user_id}) do
+    params = Map.merge(%{"id" => id, "user_id" => user_id}, conn.body_params["team"])
+    with {:ok, %Team{} = team} <- Management.create_team(params) do
       conn
       |> put_status(:created)
       |> render("show.json", team: team)

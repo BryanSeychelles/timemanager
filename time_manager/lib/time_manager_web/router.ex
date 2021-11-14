@@ -30,6 +30,7 @@ defmodule TimeManagerWeb.Router do
 
     scope "/users" do
       get "/all", UserController, :index
+      get "/employees", UserController, :show_employees
       get "/:userID", UserController, :show
       post "/", UserController, :create
       post "/sign_in", UserController, :sign_in
@@ -63,10 +64,11 @@ defmodule TimeManagerWeb.Router do
 
     scope "/teams" do
       get "/all", TeamController, :index
+      get "/", UserTeamController, :index
       get "/:manager_id", TeamController, :show
       get "/:id/users", UserController, :show_users_of_team
       post "/:manager_id", TeamController, :create
-      post "/:id/:user_id", TeamController, :add_user_in_team
+      post "/", UserTeamController, :create
       put "/:user_id", TeamController, :update
       delete "/:user_id", TeamController, :delete
       options "/", TeamController, :options

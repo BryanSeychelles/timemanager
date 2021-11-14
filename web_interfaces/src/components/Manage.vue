@@ -3,47 +3,47 @@
     <v-container class="text-center mb-8">
       <v-container class="d-flex justify-center">
         <h2>Manage my teams</h2>
-
-        <!-- MODAL NEW TEAM -->
-        <v-dialog v-model="createTeamDialog" persistent max-width="600px">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary" dark v-bind="attrs" v-on="on">New team</v-btn>
-          </template>
-          <v-card>
-            <v-card-title justify="center">
-              <span class="text-h5">New team</span>
-            </v-card-title>
-            <v-card-text>
-              <v-container>
-                <v-form>
-                  <v-container>
-                    <v-row justify="center" >
-                      <v-col cols="12" sm="5" md="5">
-                        <v-text-field v-model="newName" outlined dense required label="Name"></v-text-field>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-form>
-              </v-container>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text v-on:click="closeNewTeamDialog()">Close</v-btn>
-              <v-btn color="primary" v-on:click="createTeam(userId)">Save</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
       </v-container>
 
       <v-select class="select" :items="teams" v-model="selected" item-text="name" return-object v-on:change="getUsersInTeam(selected.id)" label="Select a team"/>
-      <v-card :elevation="6" class="ma-4 pa-8">
-        <v-container class="d-flex teal align-center lighten-2 white--text">
+
+      <!-- MODAL NEW TEAM -->
+      <v-dialog v-model="newTeamDialog" persistent max-width="600px">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn color="primary" dark v-bind="attrs" v-on="on">New team</v-btn>
+        </template>
+        <v-card>
+          <v-card-title justify="center">
+            <span class="text-h5">New team</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container>
+              <v-form>
+                <v-container>
+                  <v-row justify="center" >
+                    <v-col cols="12" sm="5" md="5">
+                      <v-text-field v-model="newName" outlined dense required label="Name"></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-form>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text v-on:click="closeNewTeamDialog()">Close</v-btn>
+            <v-btn color="primary" v-on:click="createTeam(userId)">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-card :elevation="6" class="ma-4 pa-8" v-if="this.selected">
+        <v-container class="d-flex teal flex-md-row flex-sm-column align-center lighten-2 white--text">
           <v-card-title>{{selected.name}}</v-card-title>
 
-          <!-- MODAL NEW TEAM -->
-          <v-dialog v-model="createTeamDialog" persistent max-width="600px">
+          <!-- MODAL ADD USER -->
+          <v-dialog v-model="addUserDialog" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark v-bind="attrs" v-on="on">Add user</v-btn>
+              <v-btn color="primary" dark v-bind="attrs" v-on:click="getEmployees()" v-on="on">Add user</v-btn>
             </template>
             <v-card>
               <v-card-title justify="center">
@@ -54,8 +54,8 @@
                   <v-form>
                     <v-container>
                       <v-row justify="center" >
-                        <v-col cols="12" sm="5" md="5">
-                          <v-text-field v-model="newName" outlined dense required label="Name"></v-text-field>
+                        <v-col cols="1" sm="5" md="5">
+                          <v-select class="select" :items="employees" dense v-model="selectedEmployee" item-text="username" return-object label="Select a user"/>
                         </v-col>
                       </v-row>
                     </v-container>
@@ -64,8 +64,8 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text v-on:click="closeNewTeamDialog()">Close</v-btn>
-                <v-btn color="primary" v-on:click="createTeam(userId)">Save</v-btn>
+                <v-btn color="blue darken-1" text v-on:click="closeAddUserDialog()">Close</v-btn>
+                <v-btn color="primary" v-on:click="addUserToTeam(selected.id, selectedEmployee.id)">Save</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -93,10 +93,12 @@ export default {
   data() {
     return {
       selected: '',
+      selectedEmployee: '',
       teams: [],
       current_user: [],
       users: [],
-      createTeamDialog: null,
+      employees: [],
+      addUserDialog: null,
       newName: '',
       newTeamDialog: null,
       path: 'http://localhost:4000/api/teams',
@@ -107,6 +109,14 @@ export default {
     this.getTeams(this.userId);
   },
   methods: {
+    getEmployees() {
+      axios
+        .get('http://localhost:4000/api/users/employees')
+        .then((response) =>{
+          console.log(response.data.data);
+          this.employees = response.data.data;
+        })
+    },
     getTeams(manager_id) {
       axios
         .get(this.path + "/" + manager_id)
@@ -137,8 +147,26 @@ export default {
         })
         .catch((err) => console.log(err.message));
     },
+    addUserToTeam(team_id, user_id) {
+      axios
+        .post(this.path + "/", {
+          user_team: {
+            user_id: user_id,
+            team_id: team_id
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          location.reload();
+        })
+        .catch((err) => console.log(err.message));
+    },
     closeNewTeamDialog (){
       this.newTeamDialog = false
+      location.reload()
+    },
+    closeAddUserDialog (){
+      this.addUserDialog = false
       location.reload()
     }
   },

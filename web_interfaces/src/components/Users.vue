@@ -77,9 +77,9 @@
                         <v-form>
                           <v-container>
                             <v-row justify="center" >
-                              <v-col cols="1" sm="5" md="5">
-                                <v-text-field v-model="newUsername" outlined required label="Username" :placeholder="user.username"></v-text-field>
-                                <v-text-field v-model="newEmail" outlined required label="Email" :placeholder="user.email"></v-text-field>
+                              <v-col cols="12" sm="5" md="5">
+                                <v-text-field v-model="newUsername" dense outlined required label="Username" :placeholder="user.username"></v-text-field>
+                                <v-text-field v-model="newEmail" dense outlined required label="Email" :placeholder="user.email"></v-text-field>
                               </v-col>
                             </v-row>
                           </v-container>

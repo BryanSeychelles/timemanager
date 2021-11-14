@@ -61,6 +61,10 @@ defmodule TimeManager.Management do
     Repo.all(User)
   end
 
+  def list_employees do
+    Repo.all(from u in User, where: u.role == :Employee)
+  end
+
   @doc """
   Gets a single user.
 
@@ -486,5 +490,11 @@ defmodule TimeManager.Management do
   """
   def change_team(%Team{} = team, attrs \\ %{}) do
     Team.changeset(team, attrs)
+  end
+
+  def create_user_team(attrs \\ %{}) do
+    %UserTeam{}
+    |> UserTeam.changeset(attrs)
+    |> Repo.insert()
   end
 end

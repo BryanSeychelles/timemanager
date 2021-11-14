@@ -5,13 +5,12 @@ defmodule TimeManager.Management.UserTeam do
   schema "users_teams" do
     belongs_to :user, TimeManager.Management.User
     belongs_to :team, TimeManager.Management.Team
-    timestamps()
   end
 
   @doc false
   def changeset(user_team, attrs) do
     user_team
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:team_id, :user_id])
+    |> validate_required([:team_id, :user_id])
   end
 end

@@ -27,6 +27,11 @@ defmodule TimeManagerWeb.UserController do
     render(conn, "index.json", users: users)
   end
 
+  def show_employees(conn, _params) do
+    users = Management.list_employees()
+    render(conn, "index.json", users: users)
+  end
+
   def show(conn, _) do
     user = Guardian.Plug.current_resource(conn)
     conn |> render("user.json", user: user)
