@@ -1,11 +1,10 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" class="white--text">
+    <v-app-bar app color="deep-purple lighten-2" class="white--text">
       <v-toolbar-title class="text-uppercase font-weight-bold mr-10">
         Time manager
       </v-toolbar-title>
-      <v-toolbar-items class="d-flex justify-space-around align-center">
-        <router-link class="white--text text-decoration-none mr-6" to="/users/1">
+        <router-link class="white--text text-decoration-none mr-6" to="/users/1"> <!-- TO DO: CURRENT USER IN URL-->
           <v-btn>Dashboard</v-btn>
         </router-link>
         <router-link class="white--text text-decoration-none mr-6" to="/users">
