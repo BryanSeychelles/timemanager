@@ -3,6 +3,8 @@ defmodule TimeManager.Management.Team do
   import Ecto.Changeset
 
   schema "teams" do
+    field :name, :string
+    field :manager_id, :integer
     many_to_many :users, TimeManager.Management.User, join_through: "users_teams"
 
     timestamps()
@@ -10,5 +12,8 @@ defmodule TimeManager.Management.Team do
 
   @doc false
   def changeset(team, attrs) do
+    team
+    |> cast(attrs, [:name, :manager_id])
+    |> validate_required([:name, :manager_id])
   end
 end

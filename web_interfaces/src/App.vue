@@ -21,7 +21,7 @@
       <!-- DIALOG FOR ACCOUNT INFORMATIONS -->
       <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="green" dark v-bind="attrs" v-on="on">
+        <v-btn color="orange" dark v-bind="attrs" v-on="on">
         <span>Account</span>
         <v-icon small class="ml-2">fas fa-angle-down</v-icon>
         </v-btn>
@@ -32,7 +32,9 @@
             <v-list-item-content>
               <v-list-item-title>{{this.user.username}}</v-list-item-title>
               <v-list-item-subtitle>{{this.user.email}}</v-list-item-subtitle>
-              <v-list-item-title class="mt-4">{{this.user.role}}</v-list-item-title>
+              <v-list-item-title class="mt-4" v-if="this.user.role == 'General_Manager'">General Manager</v-list-item-title>
+              <v-list-item-title class="mt-4" v-if="this.user.role == 'Manager'">Manager</v-list-item-title>
+              <v-list-item-title class="mt-4" v-if="this.user.role == 'Employee'">Employee</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>

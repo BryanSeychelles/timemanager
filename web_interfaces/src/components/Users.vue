@@ -18,7 +18,7 @@
               <v-form>
                 <v-container>
                   <v-row justify="center" >
-                    <v-col cols="1" sm="5" md="5">
+                    <v-col cols="12" sm="5" md="5">
                       <v-text-field v-model="newUsername" outlined dense required label="Username"></v-text-field>
                       <v-text-field v-model="newEmail" outlined dense required label="Email"></v-text-field>
                       <v-text-field v-model="newPassword" type="password" outlined dense required label="Password"></v-text-field>
@@ -39,20 +39,23 @@
     </div>
 
     <v-row justify="center" class="mt-4">
-      <v-simple-table>
+      <v-simple-table class="users-table">
           <thead>
             <tr>
-              <th class="text-left">Username</th>
-              <th class="text-left">Email</th>
-              <th class="text-left">Role</th>
+              <th class="text-center">Username</th>
+              <th class="text-center">Email</th>
+              <th class="text-center">Role</th>
+              <th class="text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr class="align-center" v-for="user in users" :key="user.id">
-              <td>{{user.username}}</td>
-              <td>{{user.email}}</td>
-              <td>{{user.role}}</td>
-              <v-container class="align-center">
+              <td class="text-center text-truncate">{{user.username}}</td>
+              <td class="text-center text-truncate">{{user.email}}</td>
+              <td class="text-center text-truncate" v-if="user.role == 'General_Manager'">General Manager</td>
+              <td class="text-center text-truncate" v-if="user.role == 'Manager'">Manager</td>
+              <td class="text-center text-truncate" v-if="user.role == 'Employee'">Employee</td>
+              <v-container class="actions-container align-center">
                 <v-btn small class="ml-2" v-on:click="getUser(user.id)">
                   <router-link class="link-router" :to="'/users/' + user.id">Show</router-link>
                 </v-btn>
@@ -75,8 +78,8 @@
                           <v-container>
                             <v-row justify="center" >
                               <v-col cols="1" sm="5" md="5">
-                                <v-text-field v-model="user.username" outlined required label="Username"></v-text-field>
-                                <v-text-field v-model="user.email" outlined required label="Email"></v-text-field>
+                                <v-text-field v-model="newUsername" outlined required label="Username" :placeholder="user.username"></v-text-field>
+                                <v-text-field v-model="newEmail" outlined required label="Email" :placeholder="user.email"></v-text-field>
                               </v-col>
                             </v-row>
                           </v-container>
@@ -247,5 +250,13 @@ export default {
 
   .link-router{
     text-decoration: none;
+  }
+
+  .users-table{
+    border: 1px solid #E0E0E0;
+  }
+
+  .actions-container{
+    border-bottom: 1px solid #E0E0E0;
   }
 </style>

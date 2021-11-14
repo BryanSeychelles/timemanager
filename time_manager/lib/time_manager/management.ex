@@ -377,16 +377,24 @@ defmodule TimeManager.Management do
     Repo.all(Team)
   end
 
-  def list_teams_by_user(user_id) do
-    query = from w in Team, where: w.user_id == ^user_id
+  def list_teams_by_user(manager_id) do
     Repo.all(
-      from u in User,
-      where: u.id == ^user_id,
-      join: ut in UserTeam, on: u.id == ut.user_id,
-      join: t in Team, on: t.id == ut.team_id,
-      select: %{id: t.id}
+      from t in Team,
+      where: t.manager_id == ^manager_id,
+      select: %{id: t.id, name: t.name, manager_id: t.manager_id}
     )
   end
+
+  # def list_teams_by_user(user_id) do
+  #   query = from w in Team, where: w.user_id == ^user_id
+  #   Repo.all(
+  #     from u in User,
+  #     where: u.id == ^user_id,
+  #     join: ut in UserTeam, on: u.id == ut.user_id,
+  #     join: t in Team, on: t.id == ut.team_id,
+  #     select: %{id: t.id, name: t.name}
+  #   )
+  # end
 
   def list_users_by_team(id) do
     Repo.all(

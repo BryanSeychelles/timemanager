@@ -11,8 +11,14 @@ defmodule TimeManagerWeb.TeamController do
     render(conn, "index.json", teams: teams)
   end
 
-  def create(conn, %{"team" => team_params}) do
-    with {:ok, %Team{} = team} <- Management.create_team(team_params) do
+  def create(conn, %{"manager_id" => manager_id}) do
+    params = Map.merge(%{"manager_id" => manager_id}, conn.body_params["team"])
+    with {:ok, %Team{} = team} <- Management.create_team(params) do
+      conn
+      |> put_status(:created)
+      |> render("show.json", team: team)
+    end
+  end
       conn
       |> put_status(:created)
       |> render("show.json", team: team)
@@ -24,8 +30,8 @@ defmodule TimeManagerWeb.TeamController do
     render(conn, "show.json", team: team)
   end
 
-  def show(conn, %{"user_id" => user_id}) do
-    teams = Management.list_teams_by_user(user_id)
+  def show(conn, %{"manager_id" => manager_id}) do
+    teams = Management.list_teams_by_user(manager_id)
     render(conn, "index.json", teams: teams)
   end
 
