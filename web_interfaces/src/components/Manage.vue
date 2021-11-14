@@ -5,7 +5,7 @@
         <h2>Manage my teams</h2>
       </v-container>
 
-      <v-select class="select" :items="teams" v-model="selected" item-text="name" return-object v-on:change="getUsersInTeam(selected.id)" label="Select a team"/>
+      <v-select class="select" :items="teams" v-model="selected" item-text="name" return-object v-on:change="getUsersInTeam(selected.id), getWorkingtimesByTeam(selected.id)" label="Select a team"/>
 
       <!-- MODAL NEW TEAM -->
       <v-dialog v-model="newTeamDialog" persistent max-width="600px">
@@ -80,6 +80,7 @@
             </v-card-actions>
           </v-card>
         </v-container>
+        <!-- WORKINGTIMES -->
       </v-card>
     </v-container>
   </v-container>
@@ -98,6 +99,7 @@ export default {
       current_user: [],
       users: [],
       employees: [],
+      workingtimes: [],
       addUserDialog: null,
       newName: '',
       newTeamDialog: null,
@@ -133,6 +135,18 @@ export default {
           console.log(response.data.data)
           this.users = response.data.data
         })
+    },
+    getWorkingtimesByTeam(team_id) {
+      axios
+        .get(this.path + '/' + team_id + '/workingtimes')
+        .then((response) => {
+          console.log(response.data.data)
+          this.workingtimes = response.data.data
+        })
+    },
+    getWorkingtimesAndUsersByTeam(team_id) {
+      getUsersInTeam(team_id)
+      getWorkingtimesByTeam(team_id)
     },
     createTeam(manager_id) {
       axios

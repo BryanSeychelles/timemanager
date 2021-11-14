@@ -85,7 +85,9 @@ export default {
       if (this.user != null) {
         this.$router.push("/users/" + this.user.id);
         localStorage.setItem("user_token", this.token);
-        localStorage.setItem("user", this.user);
+        localStorage.setItem("user_id", this.user.id);
+        localStorage.setItem("user_username", this.user.username);
+        localStorage.setItem("user_role", this.user.role);
       }
     },
   },

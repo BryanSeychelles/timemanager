@@ -71,6 +71,7 @@ defmodule TimeManagerWeb.Router do
       get "/", UserTeamController, :index
       get "/:manager_id", TeamController, :show
       get "/:id/users", UserController, :show_users_of_team
+      get "/:team_id/workingtimes", WorkingtimeController, :show_workingtimes_by_team
       post "/:manager_id", TeamController, :create
       post "/", UserTeamController, :create
       put "/:user_id", TeamController, :update

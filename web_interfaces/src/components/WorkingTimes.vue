@@ -128,6 +128,8 @@ export default {
       day: "",
       heures_jour: "00:00",
       total_semaine: "00:00",
+      newDateStart: '',
+      newDateEnd: '',
       startDate: "",
       endDate: "",
       date_actuelle: "",
