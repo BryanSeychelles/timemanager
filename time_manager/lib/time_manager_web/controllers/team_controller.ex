@@ -19,11 +19,6 @@ defmodule TimeManagerWeb.TeamController do
       |> render("show.json", team: team)
     end
   end
-      conn
-      |> put_status(:created)
-      |> render("show.json", team: team)
-    end
-  end
 
   def show(conn, %{"id" => id}) do
     team = Management.get_team!(id)
