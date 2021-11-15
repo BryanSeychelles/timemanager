@@ -63,11 +63,9 @@
                       $route.params.user_id,
                       newDateStart,
                       newDateEnd,
-                      ''
-                    )
-                  "
-                  >Save</v-btn
-                >
+                    )">
+                    Save
+                    </v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -144,6 +142,7 @@ export default {
   mounted() {
     this.date_actuelle_now();
     this.getWorkingTimes(this.current_user_id, this.date_actuelle);
+    console.log(this.days , "debug")
   },
 
   methods: {
