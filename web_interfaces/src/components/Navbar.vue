@@ -9,7 +9,7 @@
       <router-link class="white--text text-decoration-none mr-6" to="/users" v-if="current_user_role == 'General_Manager'">
         <v-btn>Users</v-btn>
       </router-link> <!-- if current user is admin -->
-      <router-link class="white--text text-decoration-none" to="/manage">
+      <router-link class="white--text text-decoration-none" to="/manage" v-if="current_user_role == 'Manager' || current_user_role == 'General_Manager'">
         <v-btn>Manage</v-btn>
       </router-link>
     </v-toolbar-items>
@@ -113,21 +113,11 @@ export default {
   data: () => ({
     path: 'http://localhost:4000/api/users',
     userId: 1,
-    current_user_id: '',
-    current_user_role: '',
+    current_user_id: localStorage.getItem("user_id"),
+    current_user_role: localStorage.getItem("user_role"),
     user: [],
     menu: '',
   }),
-  mounted (){
-    //this.getUser(this.userId) // TO DO : current_user_id
-    this.current_user_id = localStorage.getItem("user_id")
-    // this.current_user_username = localStorage.getItem("user_username")
-    this.current_user_role = localStorage.getItem("user_role")
-    console.log("navbaruser")
-    console.log(localStorage.getItem("user_id"))
-    console.log(localStorage.getItem("user_username"))
-    console.log(localStorage.getItem("user_token"))
-  },
   methods: {
     getUser (id){
       axios

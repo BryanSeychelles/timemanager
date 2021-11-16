@@ -32,7 +32,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" text v-on:click="closeNewTeamDialog()">Close</v-btn>
-            <v-btn color="primary" v-on:click="createTeam(userId)">Save</v-btn>
+            <v-btn color="primary" v-on:click="createTeam(current_user_id)">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -96,7 +96,8 @@ export default {
       selected: '',
       selectedEmployee: '',
       teams: [],
-      current_user: [],
+      current_user_id: localStorage.getItem("user_id"),
+      current_user_role: localStorage.getItem("user_role"),
       users: [],
       employees: [],
       workingtimes: [],
@@ -104,11 +105,10 @@ export default {
       newName: '',
       newTeamDialog: null,
       path: 'http://localhost:4000/api/teams',
-      userId: 1 // current_user.id in future
     };
   },
   mounted() {
-    this.getTeams(this.userId);
+    this.getTeams(this.current_user_id);
   },
   methods: {
     getEmployees() {
