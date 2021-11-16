@@ -1,19 +1,17 @@
 <template>
   <div>
-    <v-switch
-      v-model="switchMe"
-      v-on:click="manageClock(current_user_id, startDateTime, true)"
-    >
-      <template v-slot:label>
-        Turn on the progress:
-        <v-progress-circular
+    <div v-if="this.clock === [] || this.clock.status === false">
+      <v-btn class="ma-4" color="green" dark elevation="2" x-large v-on:click="manageClock(current_user_id, startDateTime, true), switchMe == true">Start</v-btn>
+    </div>
+    <div v-if="this.clock.status === true">
+      <v-btn class="ma-4" color="red" dark elevation="2" x-large v-on:click="manageClock(current_user_id, startDateTime, true)">End</v-btn>
+      <v-progress-circular
           :indeterminate="switchMe"
           :value="0"
           size="24"
           class="ml-2"
         ></v-progress-circular>
-      </template>
-    </v-switch>
+    </div>
   </div>
 </template>
 
@@ -31,12 +29,12 @@ export default {
       path: "http://localhost:4000/api/clocks",
       startDateTime: this.getDate(),
       current_user_id: localStorage.getItem("user_id"),
-      clock: null,
+      clock: [],
       switchMe: false,
     };
   },
   mounted() {
-    this.getClock(current_user_id);
+    this.getClock(this.current_user_id);
   },
   methods: {
     async getClock(UserID) {

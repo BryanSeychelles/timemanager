@@ -1,16 +1,11 @@
 <template>
   <div>
     <v-container>
-      <h2 class="text-center mb-4">Statistiques</h2>
+      <h2 class="text-center mb-4">Statistics of this weeks</h2>
       <v-row justify="center" class="align-center">
         <!-- MODAL NEW WORKINGTIME -->
-        <v-container justify="center">
-          <v-dialog
-            v-model="createWorkingTimeDialog"
-            class="mr-4"
-            persistent
-            max-width="600px"
-          >
+        <v-container class="text-center mt-6 mb-8">
+          <v-dialog v-model="createWorkingTimeDialog" class="mr-4" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 color="primary"
@@ -86,7 +81,7 @@
             ></pie-chart>
           </v-col>
           <v-col cols="2" sm="5" md="5">
-            <column-chart
+            <line-chart
               :data="[
                 ['Lundi', this.days.lundi],
                 ['Mardi', this.days.mardi],
@@ -94,7 +89,7 @@
                 ['Jeudi', this.days.jeudi],
                 ['Vendredi', this.days.vendredi],
               ]"
-            ></column-chart>
+            ></line-chart>
           </v-col>
           <v-col cols="2" sm="2" md="2">
             <column-chart
