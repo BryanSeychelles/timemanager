@@ -1,4 +1,4 @@
-<template >
+<template>
   <div>
     <v-container>
       <h2 class="text-center mb-4">Statistiques</h2>
@@ -117,7 +117,7 @@ export default {
     return {
       workingtimes: [],
       path: "http://localhost:4000/api/workingtimes",
-      userId: 10001,
+      current_user_id: localStorage.getItem("user_id"),
       days: {
         lundi: "00:00",
         mardi: "00:00",
@@ -128,8 +128,8 @@ export default {
       day: "",
       heures_jour: "00:00",
       total_semaine: "00:00",
-      newDateStart: '',
-      newDateEnd: '',
+      newDateStart: "",
+      newDateEnd: "",
       startDate: "",
       endDate: "",
       date_actuelle: "",
@@ -143,13 +143,15 @@ export default {
   },
   mounted() {
     this.date_actuelle_now();
-    this.getWorkingTimes(this.userId, this.date_actuelle);
+    this.getWorkingTimes(this.current_user_id, this.date_actuelle);
   },
 
   methods: {
     getWorkingTimes(user_id, date) {
       axios
-        .get(this.path + "/" + user_id)
+        .get(this.path + "/" + user_id, {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
         .then((response) => {
           this.workingtimes = response.data.data;
           this.sommer_workingtimes(this.workingtimes.length, date);
@@ -413,7 +415,10 @@ export default {
             "start=" +
             this.startDate +
             "&end=" +
-            this.endDate
+            this.endDate,
+          {
+            headers: { Authorization: `Bearer ${this.token}` },
+          }
         )
         .then((response) => {
           console.log(response.data);
@@ -425,12 +430,18 @@ export default {
         create_path = this.path;
       } else create_path = path;
       axios
-        .post(create_path + "/" + user_id, {
-          workingtime: {
-            start: dateStart,
-            end: dateEnd,
+        .post(
+          create_path + "/" + user_id,
+          {
+            workingtime: {
+              start: dateStart,
+              end: dateEnd,
+            },
           },
-        })
+          {
+            headers: { Authorization: `Bearer ${this.token}` },
+          }
+        )
         .then((response) => {
           console.log(response.data);
         })
@@ -438,12 +449,18 @@ export default {
     },
     updateWorkingTime(id) {
       axios
-        .put(this.path + "/" + id, {
-          workingtime: {
-            start: this.newDateStart,
-            end: this.newDateEnd,
+        .put(
+          this.path + "/" + id,
+          {
+            workingtime: {
+              start: this.newDateStart,
+              end: this.newDateEnd,
+            },
           },
-        })
+          {
+            headers: { Authorization: `Bearer ${this.token}` },
+          }
+        )
         .then((response) => {
           console.log(response.data);
           location.reload();
@@ -452,7 +469,9 @@ export default {
     },
     deleteWorkingTime(id) {
       axios
-        .delete(this.path + "/" + id)
+        .delete(this.path + "/" + id, {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
         .then((response) => {
           console.log(response);
           location.reload();

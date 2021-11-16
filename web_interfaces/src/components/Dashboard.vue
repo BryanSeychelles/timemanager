@@ -1,8 +1,8 @@
 <template>
   <v-container class="mt-4">
     <v-container class="text-center mb-8">
-      <h2>DashBoard de {{this.user.username}}</h2>
-      <clockmanager v-if="this.current_user.id == this.$route.params.id"/>
+      <h2>DashBoard de {{this.current_user_username}}</h2>
+      <clockmanager v-if="this.current_user_id == this.$route.params.id"/>
       <v-btn class="ma-4" color="green" dark elevation="2" x-large>Start</v-btn>
       <v-btn class="ma-4" color="red" dark elevation="2" x-large>End</v-btn>
     </v-container>
@@ -22,33 +22,21 @@ export default {
     return {
       path: 'http://localhost:4000/api/users',
       user: [],
+      current_user_id: localStorage.getItem("user_id"),
+      current_user_role: localStorage.getItem("user_role"),
+      current_user_username: localStorage.getItem("user_username"),
       token: localStorage.getItem("user_token"),
-      current_user: localStorage.getItem("user")
     }
   },
-  mounted () {
-    this.getUserByToken()
-  },
   methods: {
-    /*getUser (id){
+    getUserById () {
       axios
-        .get(this.path + '/' + id)
-        .then((response) => {
-          this.user = response.data.data
-          console.log(response.data.data)
-          locate.reload()
-        })
-    },*/
-    async getUserByToken() {
-      const response = await axios
-        .get("http://localhost:4000/api/users/", {
+        .get(this.path + '/' + 2, {
           headers: { Authorization: `Bearer ${this.token}` },
         })
-        .catch((error) => console.log(error));
-      this.user = response.data;
-      console.log("USER: ");
-      console.log(this.user);
-      console.log(this.user.id);
+        .then((response) => {
+          console.log(response.data)
+        })
     }
   }
 }

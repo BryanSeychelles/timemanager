@@ -1,8 +1,12 @@
 <template>
   <div>
-    <v-switch v-model="switchMe" v-on:click="manageClock(userID, startDateTime, true)">
+    <v-switch
+      v-model="switchMe"
+      v-on:click="manageClock(current_user_id, startDateTime, true)"
+    >
       <template v-slot:label>
-        Turn on the progress: <v-progress-circular
+        Turn on the progress:
+        <v-progress-circular
           :indeterminate="switchMe"
           :value="0"
           size="24"
@@ -21,48 +25,61 @@ import WorkingTimes from "./WorkingTimes.vue";
 //moment(this.clock.time, "“YYYY-MM-DD hh:mm:ss").fromNow();
 
 export default {
-
   name: "Clockmanager",
   data() {
     return {
       path: "http://localhost:4000/api/clocks",
       startDateTime: this.getDate(),
-      userID: 1, // current_user in future
+      current_user_id: localStorage.getItem("user_id"),
       clock: null,
-      switchMe: false
+      switchMe: false,
     };
   },
   mounted() {
-    this.getClock(this.userID)
+    this.getClock(current_user_id);
   },
   methods: {
     async getClock(UserID) {
       const response = await axios
-        .get(this.path + "/" + UserID)
+        .get(this.path + "/" + UserID, {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
         .catch((error) => console.log(error));
       this.clock = response.data.data;
-      console.log(this.clock)
+      console.log(this.clock);
     },
     createClock(UserID, startTime, Status) {
       axios
-        .post(this.path + "/" + UserID, {
-          clock: {
-            time: startTime,
-            status: Status,
-            user_id: UserID,
+        .post(
+          this.path + "/" + UserID,
+          {
+            clock: {
+              time: startTime,
+              status: Status,
+              user_id: UserID,
+            },
           },
-        })
+          {
+            headers: { Authorization: `Bearer ${this.token}` },
+          }
+        )
         .then((response) => {})
         .catch((err) => console.log(err.message));
     },
     updateClock(UserID, startTime, Status) {
       axios
-        .put(this.path + "/" + UserID, {
-          clock: {
-            time: startTime,
-            status: Status
+        .put(
+          this.path + "/" + UserID,
+          {
+            clock: {
+              time: startTime,
+              status: Status,
+            },
           },
-        })
+          {
+            headers: { Authorization: `Bearer ${this.token}` },
+          }
+        )
         .then((response) => {})
         .catch((err) => console.log(err.message));
     },
@@ -82,7 +99,11 @@ export default {
         } else {
           clock_start_time = this.getDate();
         }
-        this.updateClock(this.clock.user_id, clock_start_time, !this.clock.status);
+        this.updateClock(
+          this.clock.user_id,
+          clock_start_time,
+          !this.clock.status
+        );
       }
     },
     getDate() {
