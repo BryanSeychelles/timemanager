@@ -72,7 +72,7 @@
         </v-container>
 
         <v-row>
-          <v-col cols="1" sm="5" md="5">
+          <v-col cols="12" sm="5" md="5">
             <pie-chart
               :data="[
                 ['Lundi', this.days.lundi],
@@ -83,7 +83,7 @@
               ]"
             ></pie-chart>
           </v-col>
-          <v-col cols="2" sm="5" md="5">
+          <v-col cols="12" sm="5" md="5">
             <column-chart
               :data="[
                 ['Lundi', this.days.lundi],
@@ -94,7 +94,7 @@
               ]"
             ></column-chart>
           </v-col>
-          <v-col cols="2" sm="2" md="2">
+          <v-col cols="12" sm="2" md="2">
             <column-chart
               :data="[['Total', this.total_semaine]]"
             ></column-chart>
