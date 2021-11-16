@@ -93,7 +93,7 @@
                   v-on:click="closeEditUserDialog()"
                   >Close</v-btn
                 >
-                <v-btn color="green" dark v-on:click="updateUser(user.id)"
+                <v-btn color="green" dark v-on:click="updateUser(current_user_id)"
                   >Edit</v-btn
                 >
               </v-card-actions>
