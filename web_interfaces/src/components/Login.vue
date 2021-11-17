@@ -37,7 +37,7 @@ export default {
       connection_error: false,
       value: true,
       user: null,
-      email: "foo@bar.com",
+      email: "admin@gmail.com",
       password: "12345678"
       /*rule_email: [
         e => !!e || "Required",

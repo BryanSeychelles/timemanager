@@ -185,10 +185,10 @@
                   to="/manage"
                 >
                   <v-btn>Manage</v-btn>
-                </router-link>                
+                </router-link>
               </v-list-item>
-            </v-list>            
-          </v-menu>          
+            </v-list>
+          </v-menu>
         </div>
               <v-spacer></v-spacer>
 

@@ -246,6 +246,7 @@ export default {
         .then((response) => {
           console.log(response.data.data);
           this.users = response.data.data;
+          this.removeUserFromList(this.current_user_id);
         })
         .catch((err) => console.log(err.message));
     },
@@ -258,19 +259,6 @@ export default {
           console.log(response.data);
         });
     },
-    /*getUsersByEmailAndUsername() {
-      axios
-        .get(
-          this.path +
-            "?email=" +
-            this.user.email +
-            "&username=" +
-            this.user.username
-        )
-        .then((response) => {
-          this.users = response.data.data;
-        });
-    },*/
     createUser() {
       axios
         .post(
@@ -349,6 +337,14 @@ export default {
     closeNewUserDialog() {
       this.newUserDialog = false;
       location.reload();
+    },
+    removeUserFromList(user_id) {
+      this.users.forEach(function (user, index, object) {
+        if (user.id == user_id) {
+          console.log(user);
+          object.splice(index, 1);
+        }
+      });
     },
   },
 };
