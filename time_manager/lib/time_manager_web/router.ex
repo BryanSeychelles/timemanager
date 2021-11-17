@@ -27,31 +27,18 @@ defmodule TimeManagerWeb.Router do
       get "/:userID", UserController, :show
       put "/:userID", UserController, :update
       put "/:userID/promote", UserController, :promote
+      post "/", UserController, :create
       delete "/:userID", UserController, :delete
       options "/", UserController, :options
       options "/:userID", UserController, :options
       options "/:userID/promote", UserController, :options
     end
-  end
-
-  # Other scopes may use custom stacks.
-  scope "/api", TimeManagerWeb do
-    pipe_through :api
-
-    scope "/users" do
-      get "/all", UserController, :index
-      get "/employees", UserController, :show_employees
-      get "/:userID", UserController, :show
-      post "/", UserController, :create
-      post "/sign_in", UserController, :sign_in
-      options "/sign_in", UserController, :options
-    end
 
     scope "/workingtimes" do
       get "/:user_id", WorkingtimeController, :show
       get "/:user_id/:id", WorkingtimeController, :show
-      post "/:user_id", WorkingtimeController, :create
       put "/:id", WorkingtimeController, :update
+      post "/:user_id", WorkingtimeController, :create
       delete "/:id", WorkingtimeController, :delete
       options "/", WorkingtimeController, :options
       options "/:user_id", WorkingtimeController, :options
@@ -64,6 +51,18 @@ defmodule TimeManagerWeb.Router do
       post "/:user_id", ClockController, :create
       put "/:user_id", ClockController, :update
       options "/:user_id", ClockController, :options
+    end
+  end
+
+  # Other scopes may use custom stacks.
+  scope "/api", TimeManagerWeb do
+    pipe_through :api
+
+    scope "/users" do
+      get "/all", UserController, :index
+      get "/employees", UserController, :show_employees
+      post "/sign_in", UserController, :sign_in
+      options "/sign_in", UserController, :options
     end
 
     scope "/teams" do

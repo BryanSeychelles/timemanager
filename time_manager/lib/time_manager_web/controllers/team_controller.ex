@@ -3,6 +3,7 @@ defmodule TimeManagerWeb.TeamController do
 
   alias TimeManager.Management
   alias TimeManager.Management.Team
+  alias TimeManagerWeb.Guardian
 
   action_fallback(TimeManagerWeb.FallbackController)
 

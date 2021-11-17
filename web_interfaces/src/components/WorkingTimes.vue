@@ -5,7 +5,12 @@
       <v-row justify="center" class="align-center">
         <!-- MODAL NEW WORKINGTIME -->
         <v-container class="text-center mt-6 mb-8">
-          <v-dialog v-model="createWorkingTimeDialog" class="mr-4" persistent max-width="600px">
+          <v-dialog
+            v-model="createWorkingTimeDialog"
+            class="mr-4"
+            persistent
+            max-width="600px"
+          >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 color="primary"
@@ -58,9 +63,11 @@
                       $route.params.user_id,
                       newDateStart,
                       newDateEnd,
-                    )">
-                    Save
-                    </v-btn>
+                      "http://localhost:4000/api/workingtimes"
+                    )
+                  "
+                  >Save</v-btn
+                >
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -109,8 +116,9 @@ export default {
   data() {
     return {
       workingtimes: [],
-      path: "http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/workingtimes",
+      path: "http://localhost:4000/api/workingtimes",
       current_user_id: localStorage.getItem("user_id"),
+      token: localStorage.getItem("user_token"),
       days: {
         lundi: "00:00",
         mardi: "00:00",
@@ -134,23 +142,22 @@ export default {
       editWorkingTimeDialog: false,
     };
   },
-  mounted() {
+  async mounted() {
     this.date_actuelle_now();
-    this.getWorkingTimes(this.current_user_id, this.date_actuelle);
-    console.log(this.days , "debug")
+    await this.getWorkingTimes(this.current_user_id, this.date_actuelle);
   },
 
   methods: {
-    getWorkingTimes(user_id, date) {
-      axios
+    async getWorkingTimes(user_id, date) {
+      const response = await axios
         .get(this.path + "/" + user_id, {
           headers: { Authorization: `Bearer ${this.token}` },
         })
-        .then((response) => {
-          this.workingtimes = response.data.data;
-          this.sommer_workingtimes(this.workingtimes.length, date);
-        })
         .catch((err) => console.log(err.message));
+      if (response != null) {
+        this.workingtimes = response.data.data;
+        this.sommer_workingtimes(this.workingtimes.length, date);
+      }
     },
 
     m_trouver_days(date) {
@@ -419,13 +426,9 @@ export default {
         });
     },
     createWorkingTime(user_id, dateStart, dateEnd, path) {
-      var create_path;
-      if (path == "") {
-        create_path = this.path;
-      } else create_path = path;
       axios
         .post(
-          create_path + "/" + user_id,
+          path + "/" + user_id,
           {
             workingtime: {
               start: dateStart,

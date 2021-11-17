@@ -152,9 +152,8 @@ export default {
   name: "Manage",
   data() {
     return {
-      selected: "",
-      selectedEmployee: "",
-      teams: [],
+      path: "http://localhost:4000/api/teams",
+      token: localStorage.getItem("user_token"),
       current_user_id: localStorage.getItem("user_id"),
       current_user_role: localStorage.getItem("user_role"),
       users: [],
@@ -163,7 +162,9 @@ export default {
       addUserDialog: null,
       newName: "",
       newTeamDialog: null,
-      path: "http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/teams",
+      selected: "",
+      selectedEmployee: "",
+      teams: []
     };
   },
   mounted() {
@@ -172,7 +173,7 @@ export default {
   methods: {
     getEmployees() {
       axios
-        .get("http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/users/employees", {
+        .get("http://localhost:4000/api/users/employees", {
           headers: { Authorization: `Bearer ${this.token}` },
         })
         .then((response) => {
