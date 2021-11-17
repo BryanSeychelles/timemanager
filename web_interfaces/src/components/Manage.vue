@@ -86,7 +86,7 @@
                   <v-form>
                     <v-container>
                       <v-row justify="center">
-                        <v-col cols="1" sm="5" md="5">
+                        <v-col cols="12" sm="12" md="12">
                           <v-select
                             class="select"
                             :items="employees"
@@ -152,9 +152,8 @@ export default {
   name: "Manage",
   data() {
     return {
-      selected: "",
-      selectedEmployee: "",
-      teams: [],
+      path: "http://localhost:4000/api/teams",
+      token: localStorage.getItem("user_token"),
       current_user_id: localStorage.getItem("user_id"),
       current_user_role: localStorage.getItem("user_role"),
       users: [],
@@ -163,7 +162,9 @@ export default {
       addUserDialog: null,
       newName: "",
       newTeamDialog: null,
-      path: 'http://localhost:4000/api/teams',
+      selected: "",
+      selectedEmployee: "",
+      teams: []
     };
   },
   mounted() {

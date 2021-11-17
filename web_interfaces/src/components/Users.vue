@@ -213,12 +213,12 @@ export default {
   name: "Users",
   data() {
     return {
-      users: [],
-      createUserDialog: "",
-      editUserDialog: "",
       path: "http://localhost:4000/api/users",
       token: localStorage.getItem("user_token"),
       current_user_id: localStorage.getItem("user_id"),
+      users: [],
+      createUserDialog: "",
+      editUserDialog: "",
       newUsername: "",
       newEmail: "",
       newPassword: "",

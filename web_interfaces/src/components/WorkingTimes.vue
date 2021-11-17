@@ -5,7 +5,12 @@
       <v-row justify="center" class="align-center">
         <!-- MODAL NEW WORKINGTIME -->
         <v-container class="text-center mt-6 mb-8">
-          <v-dialog v-model="createWorkingTimeDialog" class="mr-4" persistent max-width="600px">
+          <v-dialog
+            v-model="createWorkingTimeDialog"
+            class="mr-4"
+            persistent
+            max-width="600px"
+          >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 color="primary"
@@ -58,7 +63,7 @@
                       $route.params.user_id,
                       newDateStart,
                       newDateEnd,
-                      ''
+                      "http://localhost:4000/api/workingtimes"
                     )
                   "
                   >Save</v-btn
@@ -69,7 +74,7 @@
         </v-container>
 
         <v-row>
-          <v-col cols="1" sm="5" md="5">
+          <v-col cols="12" sm="5" md="5">
             <pie-chart
               :data="[
                 ['Lundi', this.days.lundi],
@@ -80,8 +85,8 @@
               ]"
             ></pie-chart>
           </v-col>
-          <v-col cols="2" sm="5" md="5">
-            <line-chart
+          <v-col cols="12" sm="5" md="5">
+            <column-chart
               :data="[
                 ['Lundi', this.days.lundi],
                 ['Mardi', this.days.mardi],
@@ -89,9 +94,9 @@
                 ['Jeudi', this.days.jeudi],
                 ['Vendredi', this.days.vendredi],
               ]"
-            ></line-chart>
+            ></column-chart>
           </v-col>
-          <v-col cols="2" sm="2" md="2">
+          <v-col cols="12" sm="2" md="2">
             <column-chart
               :data="[['Total', this.total_semaine]]"
             ></column-chart>
@@ -113,6 +118,7 @@ export default {
       workingtimes: [],
       path: "http://localhost:4000/api/workingtimes",
       current_user_id: localStorage.getItem("user_id"),
+      token: localStorage.getItem("user_token"),
       days: {
         lundi: "00:00",
         mardi: "00:00",
@@ -136,22 +142,22 @@ export default {
       editWorkingTimeDialog: false,
     };
   },
-  mounted() {
+  async mounted() {
     this.date_actuelle_now();
-    this.getWorkingTimes(this.current_user_id, this.date_actuelle);
+    await this.getWorkingTimes(this.current_user_id, this.date_actuelle);
   },
 
   methods: {
-    getWorkingTimes(user_id, date) {
-      axios
+    async getWorkingTimes(user_id, date) {
+      const response = await axios
         .get(this.path + "/" + user_id, {
           headers: { Authorization: `Bearer ${this.token}` },
         })
-        .then((response) => {
-          this.workingtimes = response.data.data;
-          this.sommer_workingtimes(this.workingtimes.length, date);
-        })
         .catch((err) => console.log(err.message));
+      if (response != null) {
+        this.workingtimes = response.data.data;
+        this.sommer_workingtimes(this.workingtimes.length, date);
+      }
     },
 
     m_trouver_days(date) {
@@ -420,13 +426,9 @@ export default {
         });
     },
     createWorkingTime(user_id, dateStart, dateEnd, path) {
-      var create_path;
-      if (path == "") {
-        create_path = this.path;
-      } else create_path = path;
       axios
         .post(
-          create_path + "/" + user_id,
+          path + "/" + user_id,
           {
             workingtime: {
               start: dateStart,

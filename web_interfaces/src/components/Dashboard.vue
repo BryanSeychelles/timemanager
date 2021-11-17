@@ -18,12 +18,12 @@ export default {
   components: { Workingtimes, Clockmanager },
   data () {
     return {
-      path: 'http://localhost:4000/api/users',
-      user: [],
+      path: "http://localhost:4000/api/users",
+      token: localStorage.getItem("user_token"),
       current_user_id: localStorage.getItem("user_id"),
       current_user_role: localStorage.getItem("user_role"),
       current_user_username: localStorage.getItem("user_username"),
-      token: localStorage.getItem("user_token"),
+      user: [],
     }
   },
   methods: {
