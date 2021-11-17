@@ -13,6 +13,6 @@
 TimeManager.Repo.insert!(%TimeManager.Management.User{
   username: "admin",
   email: "admin@gmail.com",
-  password_hash: "admin",
+  password_hash: "$2a$12$lTIZGJkxWnehHWBaOxJ5UO2tpxMW6PnfDu1UZnud96knGY/.TemBO",
   role: :General_Manager
 })
