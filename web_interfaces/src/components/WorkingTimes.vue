@@ -63,11 +63,11 @@
                       $route.params.user_id,
                       newDateStart,
                       newDateEnd,
-                      "http://localhost:4000/api/workingtimes"
-                    )
-                  "
-                  >Save</v-btn
-                >
+                      path
+                    )"
+                  >
+                  Save
+                  </v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -116,7 +116,7 @@ export default {
   data() {
     return {
       workingtimes: [],
-      path: "http://localhost:4000/api/workingtimes",
+      path: "http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/workingtimes",
       current_user_id: localStorage.getItem("user_id"),
       token: localStorage.getItem("user_token"),
       days: {

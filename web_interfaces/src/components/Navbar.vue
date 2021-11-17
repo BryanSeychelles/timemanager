@@ -329,7 +329,7 @@ import axios from "axios";
 export default {
   name: "Navbar",
   data: () => ({
-    path: "http://localhost:4000/api/users",
+    path: "http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/users",
     token: localStorage.getItem("user_token"),
     current_user_id: localStorage.getItem("user_id"),
     current_user_role: localStorage.getItem("user_role"),

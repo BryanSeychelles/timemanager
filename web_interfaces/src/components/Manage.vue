@@ -152,7 +152,7 @@ export default {
   name: "Manage",
   data() {
     return {
-      path: "http://localhost:4000/api/teams",
+      path: "http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/teams",
       token: localStorage.getItem("user_token"),
       current_user_id: localStorage.getItem("user_id"),
       current_user_role: localStorage.getItem("user_role"),
@@ -173,7 +173,7 @@ export default {
   methods: {
     getEmployees() {
       axios
-        .get("http://localhost:4000/api/users/employees", {
+        .get("http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/users/employees", {
           headers: { Authorization: `Bearer ${this.token}` },
         })
         .then((response) => {
