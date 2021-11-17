@@ -4,39 +4,35 @@
       <h2>Dashboard de {{this.user.username}}</h2>
       <clockmanager v-if="this.current_user_id == this.$route.params.id"/>
     </v-container>
-    <workingtimes />
+    <workingtimes/>
   </v-container>
 </template>
 
 <script>
-import axios from "axios";
-import Workingtimes from "./WorkingTimes.vue";
-import Clockmanager from "./ClockManager.vue";
+import axios from 'axios'
+import Workingtimes from './WorkingTimes.vue'
+import Clockmanager from './ClockManager.vue'
 
 export default {
-  name: "Dashboard",
+  name: 'Dashboard',
   components: { Workingtimes, Clockmanager },
-  data() {
+  data () {
     return {
       path: "http://localhost:4000/api/users",
       token: localStorage.getItem("user_token"),
       current_user_id: localStorage.getItem("user_id"),
       current_user_role: localStorage.getItem("user_role"),
       current_user_username: localStorage.getItem("user_username"),
-      user_username: "",
       user: [],
-    };
+    }
   },
-  async mounted() {
-    await this.getUserById(this.$route.params.id)
-  },
-  async updated() {
-    await this.getUserById(this.$route.params.id)
+  mounted() {
+    this.getUserById(this.$route.params.id)
   },
   methods: {
-    async getUserById(userID) {
+    async getUserById(id) {
       const response = await axios
-        .get(this.path + "/" + userID, {
+        .get(this.path + "/" + id, {
           headers: { Authorization: `Bearer ${this.token}` },
         })
         .catch((err) => console.log(err.message));
@@ -45,8 +41,9 @@ export default {
         console.log(this.user);
       }
     },
-  },
-};
+  }
+}
 </script>
 
-<style></style>
+<style>
+</style>
