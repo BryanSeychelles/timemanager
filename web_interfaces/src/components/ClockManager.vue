@@ -24,8 +24,8 @@ export default {
   name: "Clockmanager",
   data() {
     return {
-      path: "http://localhost:4000/api/clocks",
-      token: localStorage.getItem("user_token"),
+      path: "http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/clocks",
+      startDateTime: this.getDate(),
       current_user_id: localStorage.getItem("user_id"),
       clock: [],
       btn_text: "Start",

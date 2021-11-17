@@ -1,5 +1,12 @@
 <template>
   <v-app>
+    <v-app-bar app color="deep-purple lighten-2" class="white--text">
+      dcs
+      sdf
+      dfv
+      zed
+      fez
+    </v-app-bar>
     <navbar v-if="getLocalStorage()"/>
     <v-main>
       <router-view/>
@@ -18,7 +25,10 @@ export default {
     token: localStorage.getItem("user_token"),
   }),
   mounted() {
-
+/*     console.log(process.env.NODE_env)
+    console.log(process.env.HOST)
+ */    console.log(process.env.NODE_ENV)
+ console.log(process.env.VUE_APP_SERVICE_URL)
   },
   methods: {
     getLocalStorage() {

@@ -86,7 +86,7 @@
                   <v-form>
                     <v-container>
                       <v-row justify="center">
-                        <v-col cols="1" sm="5" md="5">
+                        <v-col cols="12" sm="12" md="12">
                           <v-select
                             class="select"
                             :items="employees"
@@ -163,7 +163,7 @@ export default {
       addUserDialog: null,
       newName: "",
       newTeamDialog: null,
-      path: 'http://localhost:4000/api/teams',
+      path: "http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/teams",
     };
   },
   mounted() {
@@ -172,7 +172,7 @@ export default {
   methods: {
     getEmployees() {
       axios
-        .get("http://localhost:4000/api/users/employees", {
+        .get("http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/users/employees", {
           headers: { Authorization: `Bearer ${this.token}` },
         })
         .then((response) => {
