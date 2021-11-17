@@ -37,6 +37,8 @@ export default {
       value: true,
       user: null,
       token: "",
+      email: "foo@bar.com",
+      password: "12345678"
       /*rule_email: [
         e => !!e || "Required",
         e => /.+@.+\..+/.test(e) || "E-mail must be valid"

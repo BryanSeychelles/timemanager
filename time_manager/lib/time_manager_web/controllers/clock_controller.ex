@@ -3,6 +3,7 @@ defmodule TimeManagerWeb.ClockController do
 
   alias TimeManager.Management
   alias TimeManager.Management.Clock
+  alias TimeManagerWeb.Guardian
 
   action_fallback(TimeManagerWeb.FallbackController)
 
@@ -36,8 +37,6 @@ defmodule TimeManagerWeb.ClockController do
     current_user = Guardian.Plug.current_resource(conn)
 
     clock = Management.get_clock_by_user(user_id)
-
-    IO.inspect(clock_params)
 
     with {:ok, %Clock{} = clock} <- Management.update_clock(clock, clock_params) do
       render(conn, "show.json", clock: clock)
