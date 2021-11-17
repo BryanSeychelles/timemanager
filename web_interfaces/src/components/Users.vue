@@ -32,6 +32,13 @@
                         required
                         label="Email"
                       ></v-text-field>
+                      <v-select
+                        :items="roles"
+                        outlined
+                        dense
+                        v-model="selectedRole"
+                        label="Select a role"
+                      />
                       <v-text-field
                         v-model="newPassword"
                         type="password"
@@ -217,11 +224,13 @@ export default {
       token: localStorage.getItem("user_token"),
       current_user_id: localStorage.getItem("user_id"),
       users: [],
+      roles: ["Employee", "Manager"],
       createUserDialog: "",
       editUserDialog: "",
       newUsername: "",
       newEmail: "",
       newPassword: "",
+      selectedRole: "",
       newPasswordConfirmation: "",
     };
   },
@@ -270,6 +279,7 @@ export default {
             user: {
               username: this.newUsername,
               email: this.newEmail,
+              role: this.selectedRole,
               password: this.newPassword,
               password_confirmation: this.newPasswordConfirmation,
             },

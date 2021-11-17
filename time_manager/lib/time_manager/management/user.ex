@@ -25,7 +25,7 @@ defmodule TimeManager.Management.User do
   def changeset_signup(user, attrs) do
     user
     |> cast(attrs, [:username, :email, :role, :password, :password_confirmation])
-    |> validate_required([:username, :email, :password, :password_confirmation])
+    |> validate_required([:username, :email, :role, :password, :password_confirmation])
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 8)
     |> validate_confirmation(:password)
