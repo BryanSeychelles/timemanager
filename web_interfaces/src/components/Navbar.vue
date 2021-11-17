@@ -29,7 +29,7 @@
       <v-spacer></v-spacer>
 
       <!-- DIALOG FOR ACCOUNT INFORMATIONS -->
-      <v-menu
+      <!-- <v-menu
         v-model="menu"
         :close-on-content-click="false"
         :nudge-width="200"
@@ -75,7 +75,7 @@
           <v-list>
             <v-list-item class="mt-2">
               <!-- MODAL EDIT USER -->
-              <v-dialog v-model="editUserDialog" persistent max-width="600px">
+              <!--<v-dialog v-model="editUserDialog" persistent max-width="600px">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn small color="green" dark v-bind="attrs" v-on="on">
                     <v-icon small class="mr-2">fas fa-edit</v-icon>
@@ -191,7 +191,7 @@
             </v-list>
           </v-menu>
         </div>
-              <v-spacer></v-spacer>
+              <v-spacer></v-spacer> -->
 
       <!-- DIALOG FOR ACCOUNT INFORMATIONS -->
       <v-menu
@@ -338,7 +338,22 @@ export default {
     user: [],
     menu: "",
   }),
+  async mounted() {
+    await this.getUserByToken();
+  },
   methods: {
+    async getUserByToken() {
+      const response = await axios
+        .get("http://localhost:4000/api/users/", {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
+        .catch((error) => console.log(error));
+      const refresh_user = response.data;
+      localStorage.setItem("user_id", refresh_user.id);
+      localStorage.setItem("user_email", refresh_user.email);
+      localStorage.setItem("user_username", refresh_user.username);
+      localStorage.setItem("user_role", refresh_user.role);
+    },
     getUser(id) {
       axios.get(this.path + "/" + id).then((response) => {
         this.user = response.data.data;
@@ -352,8 +367,8 @@ export default {
           this.path + "/" + id,
           {
             user: {
-              username: this.newUsername,
-              email: this.newEmail,
+              username: this.current_user_username,
+              email: this.current_user_email,
             },
           },
           {

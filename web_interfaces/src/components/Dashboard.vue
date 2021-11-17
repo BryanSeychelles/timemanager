@@ -28,11 +28,13 @@ export default {
     };
   },
   async mounted() {
+    if (this.token == null)
+      this.$router.push("/users/sign_in");
     if (this.current_user_id == this.$route.params.id)
       this.user_username = this.current_user_username;
     else {
-      await this.getUserById(this.$route.params.id);
-      this.user_username = this.user.username;
+    await this.getUserById(this.$route.params.id);
+    this.user_username = this.user.username;
     }
   },
   methods: {
