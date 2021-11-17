@@ -195,6 +195,7 @@
 
       <!-- DIALOG FOR ACCOUNT INFORMATIONS -->
       <v-menu
+        class="accountMobile"
         v-model="menu"
         :close-on-content-click="false"
         :nudge-width="200"
@@ -386,6 +387,10 @@ export default {
   min-height: 0 !important;
 }
 @media screen and (max-width: 640px) {
+  .accountMobile{
+    visibility: hidden;
+    display: none;
+  }
   [role="menu"] {
     margin-left: -5% !important;
   }
