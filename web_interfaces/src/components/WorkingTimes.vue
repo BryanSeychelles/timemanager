@@ -87,7 +87,7 @@
                 ['Jeudi', this.days.jeudi],
                 ['Vendredi', this.days.vendredi],
               ]"
-            ></line-chart>
+            ></column-chart>
           </v-col>
           <v-col cols="12" sm="2" md="2">
             <column-chart
@@ -109,7 +109,7 @@ export default {
   data() {
     return {
       workingtimes: [],
-      path: "http://localhost:4000/api/workingtimes",
+      path: "http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/workingtimes",
       current_user_id: localStorage.getItem("user_id"),
       days: {
         lundi: "00:00",
