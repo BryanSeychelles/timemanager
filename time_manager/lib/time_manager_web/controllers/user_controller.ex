@@ -73,7 +73,7 @@ defmodule TimeManagerWeb.UserController do
   def update(conn, %{"userID" => id, "user" => user_params}) do
     current_user = Guardian.Plug.current_resource(conn)
 
-    if current_user.role != 2 do
+    if current_user.role != 2 && current_user.id != id do
       {:error, :unauthorized}
     end
 

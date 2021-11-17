@@ -37,8 +37,6 @@ export default {
       value: true,
       user: null,
       token: "",
-      email: "foo@bar.com",
-      password: "12345678",
       /*rule_email: [
         e => !!e || "Required",
         e => /.+@.+\..+/.test(e) || "E-mail must be valid"
@@ -86,6 +84,7 @@ export default {
         this.$router.push("/users/" + this.user.id);
         localStorage.setItem("user_token", this.token);
         localStorage.setItem("user_id", this.user.id);
+        localStorage.setItem("user_email", this.user.email);
         localStorage.setItem("user_username", this.user.username);
         localStorage.setItem("user_role", this.user.role);
       }
