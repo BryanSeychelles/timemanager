@@ -58,18 +58,16 @@
                       $route.params.user_id,
                       newDateStart,
                       newDateEnd,
-                      ''
-                    )
-                  "
-                  >Save</v-btn
-                >
+                    )">
+                    Save
+                    </v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
         </v-container>
 
         <v-row>
-          <v-col cols="1" sm="5" md="5">
+          <v-col cols="12" sm="5" md="5">
             <pie-chart
               :data="[
                 ['Lundi', this.days.lundi],
@@ -80,8 +78,8 @@
               ]"
             ></pie-chart>
           </v-col>
-          <v-col cols="2" sm="5" md="5">
-            <line-chart
+          <v-col cols="12" sm="5" md="5">
+            <column-chart
               :data="[
                 ['Lundi', this.days.lundi],
                 ['Mardi', this.days.mardi],
@@ -89,9 +87,9 @@
                 ['Jeudi', this.days.jeudi],
                 ['Vendredi', this.days.vendredi],
               ]"
-            ></line-chart>
+            ></column-chart>
           </v-col>
-          <v-col cols="2" sm="2" md="2">
+          <v-col cols="12" sm="2" md="2">
             <column-chart
               :data="[['Total', this.total_semaine]]"
             ></column-chart>
@@ -111,7 +109,7 @@ export default {
   data() {
     return {
       workingtimes: [],
-      path: "http://localhost:4000/api/workingtimes",
+      path: "http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/workingtimes",
       current_user_id: localStorage.getItem("user_id"),
       days: {
         lundi: "00:00",
@@ -139,6 +137,7 @@ export default {
   mounted() {
     this.date_actuelle_now();
     this.getWorkingTimes(this.current_user_id, this.date_actuelle);
+    console.log(this.days , "debug")
   },
 
   methods: {
