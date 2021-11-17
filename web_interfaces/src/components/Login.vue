@@ -31,12 +31,12 @@ export default {
   name: "Login",
   data() {
     return {
-      path: "http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/users/sign_in",
+      path: "http://localhost:4000/api/users/sign_in",
+      token: "",
       redirect_path: "/users/",
       connection_error: false,
       value: true,
       user: null,
-      token: "",
       email: "foo@bar.com",
       password: "12345678"
       /*rule_email: [
@@ -70,7 +70,7 @@ export default {
     },
     async getUserByToken() {
       const response = await axios
-        .get("http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/users/", {
+        .get("http://localhost:4000/api/users/", {
           headers: { Authorization: `Bearer ${this.token}` },
         })
         .catch((error) => console.log(error));

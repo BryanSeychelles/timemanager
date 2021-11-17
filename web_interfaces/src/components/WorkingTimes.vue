@@ -116,8 +116,9 @@ export default {
   data() {
     return {
       workingtimes: [],
-      path: "http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/workingtimes",
+      path: "http://localhost:4000/api/workingtimes",
       current_user_id: localStorage.getItem("user_id"),
+      token: localStorage.getItem("user_token"),
       days: {
         lundi: "00:00",
         mardi: "00:00",
