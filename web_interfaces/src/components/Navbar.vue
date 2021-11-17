@@ -8,7 +8,6 @@
         class="white--text text-decoration-none mr-6"
         :to="'/users/' + current_user_id"
       >
-        <!-- TO DO: CURRENT USER IN URL-->
         <v-btn>Dashboard</v-btn>
       </router-link>
       <router-link

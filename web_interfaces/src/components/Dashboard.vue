@@ -1,7 +1,7 @@
 <template>
   <v-container class="mt-4">
     <v-container class="text-center mb-8">
-      <h2>Dashboard de {{this.current_user_username}}</h2>
+      <h2>Dashboard de {{this.user.username}}</h2>
       <clockmanager v-if="this.current_user_id == this.$route.params.id"/>
     </v-container>
     <workingtimes/>
@@ -26,13 +26,21 @@ export default {
       user: [],
     }
   },
+  mounted() {
+    this.getUserById(this.$route.params.id)
+  },
+  updated() {
+    this.getUserById(this.$route.params.id)
+    console.log("updated");
+  },
   methods: {
-    getUserById () {
+    getUserById (id) {
       axios
-        .get(this.path + '/' + 2, {
+        .get(this.path + '/' + id, {
           headers: { Authorization: `Bearer ${this.token}` },
         })
         .then((response) => {
+          this.user = response.data.data
           console.log(response.data)
         })
     }
