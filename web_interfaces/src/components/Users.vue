@@ -32,6 +32,13 @@
                         required
                         label="Email"
                       ></v-text-field>
+                      <v-select
+                        :items="roles"
+                        outlined
+                        dense
+                        v-model="selectedRole"
+                        label="Select a role"
+                      />
                       <v-text-field
                         v-model="newPassword"
                         type="password"
@@ -217,11 +224,13 @@ export default {
       token: localStorage.getItem("user_token"),
       current_user_id: localStorage.getItem("user_id"),
       users: [],
+      roles: ["Employee", "Manager"],
       createUserDialog: "",
       editUserDialog: "",
       newUsername: "",
       newEmail: "",
       newPassword: "",
+      selectedRole: "",
       newPasswordConfirmation: "",
     };
   },
@@ -237,6 +246,7 @@ export default {
         .then((response) => {
           console.log(response.data.data);
           this.users = response.data.data;
+          this.removeUserFromList(this.current_user_id);
         })
         .catch((err) => console.log(err.message));
     },
@@ -249,19 +259,6 @@ export default {
           console.log(response.data);
         });
     },
-    /*getUsersByEmailAndUsername() {
-      axios
-        .get(
-          this.path +
-            "?email=" +
-            this.user.email +
-            "&username=" +
-            this.user.username
-        )
-        .then((response) => {
-          this.users = response.data.data;
-        });
-    },*/
     createUser() {
       axios
         .post(
@@ -270,6 +267,7 @@ export default {
             user: {
               username: this.newUsername,
               email: this.newEmail,
+              role: this.selectedRole,
               password: this.newPassword,
               password_confirmation: this.newPasswordConfirmation,
             },
@@ -339,6 +337,14 @@ export default {
     closeNewUserDialog() {
       this.newUserDialog = false;
       location.reload();
+    },
+    removeUserFromList(user_id) {
+      this.users.forEach(function (user, index, object) {
+        if (user.id == user_id) {
+          console.log(user);
+          object.splice(index, 1);
+        }
+      });
     },
   },
 };

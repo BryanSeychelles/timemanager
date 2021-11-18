@@ -37,7 +37,7 @@ export default {
       connection_error: false,
       value: true,
       user: null,
-      email: "foo@bar.com",
+      email: "admin@gmail.com",
       password: "12345678"
       /*rule_email: [
         e => !!e || "Required",
@@ -65,8 +65,8 @@ export default {
           console.log(err.message);
         });
       this.token = response.data.jwt;
-      console.log("TOKEN: ");
-      console.log(this.token);
+      //console.log("TOKEN: ");
+      //console.log(this.token);
     },
     async getUserByToken() {
       const response = await axios
@@ -75,9 +75,9 @@ export default {
         })
         .catch((error) => console.log(error));
       this.user = response.data;
-      console.log("USER: ");
-      console.log(this.user);
-      console.log(this.user.id);
+      //console.log("USER: ");
+      //console.log(this.user);
+      //console.log(this.user.id);
     },
     async login() {
       await this.sign_in();

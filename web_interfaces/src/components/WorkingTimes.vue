@@ -17,11 +17,9 @@
                 dark
                 v-bind="attrs"
                 v-on="on"
-                @click="getWorkingTimes()"
                 >New Workingtime
               </v-btn>
             </template>
-
             <v-card>
               <v-card-title justify="center">
                 <span class="text-h5">New Workingtime</span>
@@ -56,11 +54,12 @@
                   v-on:click="closeNewWorkingTimeDialog()"
                   >Close</v-btn
                 >
+                <v-spacer></v-spacer>
                 <v-btn
                   color="primary"
                   v-on:click="
                     createWorkingTime(
-                      $route.params.user_id,
+                      user_id,
                       newDateStart,
                       newDateEnd,
                       path
@@ -118,6 +117,7 @@ export default {
       workingtimes: [],
       path: "http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/workingtimes",
       current_user_id: localStorage.getItem("user_id"),
+      user_id: "",
       token: localStorage.getItem("user_token"),
       days: {
         lundi: "00:00",
@@ -143,8 +143,11 @@ export default {
     };
   },
   async mounted() {
+    if (this.current_user_id == this.$route.params.id)
+      this.user_id = this.current_user_id;
+    else this.user_id = this.$route.params.id;
     this.date_actuelle_now();
-    await this.getWorkingTimes(this.current_user_id, this.date_actuelle);
+    await this.getWorkingTimes(this.user_id, this.date_actuelle);
   },
 
   methods: {
@@ -441,6 +444,7 @@ export default {
         )
         .then((response) => {
           console.log(response.data);
+          location.reload();
         })
         .catch((err) => console.log(err.message));
     },
