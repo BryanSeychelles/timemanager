@@ -28,7 +28,7 @@
       <v-spacer></v-spacer>
 
       <!-- DIALOG FOR ACCOUNT INFORMATIONS -->
-      <!-- <v-menu
+      <v-menu
         v-model="menu"
         :close-on-content-click="false"
         :nudge-width="200"
@@ -74,7 +74,7 @@
           <v-list>
             <v-list-item class="mt-2">
               <!-- MODAL EDIT USER -->
-              <!--<v-dialog v-model="editUserDialog" persistent max-width="600px">
+              <v-dialog v-model="editUserDialog" persistent max-width="600px">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn small color="green" dark v-bind="attrs" v-on="on">
                     <v-icon small class="mr-2">fas fa-edit</v-icon>
@@ -190,7 +190,7 @@
             </v-list>
           </v-menu>
         </div>
-              <v-spacer></v-spacer> -->
+        <v-spacer></v-spacer>
 
       <!-- DIALOG FOR ACCOUNT INFORMATIONS -->
       <v-menu
@@ -402,15 +402,15 @@ export default {
   min-height: 0 !important;
 }
 @media screen and (max-width: 640px) {
-  .accountMobile{
-    visibility: hidden;
-    display: none;
-  }
   [role="menu"] {
     margin-left: -5% !important;
   }
 }
 @media screen and (min-width: 641px) {
+    .v-menu__content.theme--light.menuable__content__active:nth-child(3){
+    visibility: hidden;
+    display: none !important;
+  }
   .navMobile {
     display: none !important;
   }
