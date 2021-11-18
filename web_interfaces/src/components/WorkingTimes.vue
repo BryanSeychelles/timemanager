@@ -86,7 +86,7 @@
             ></pie-chart>
           </v-col>
           <v-col cols="12" sm="5" md="5">
-            <column-chart
+            <line-chart
               :data="[
                 ['Lundi', this.days.lundi],
                 ['Mardi', this.days.mardi],
@@ -94,7 +94,7 @@
                 ['Jeudi', this.days.jeudi],
                 ['Vendredi', this.days.vendredi],
               ]"
-            ></column-chart>
+            ></line-chart>
           </v-col>
           <v-col cols="12" sm="2" md="2">
             <column-chart
@@ -163,12 +163,10 @@ export default {
         this.sommer_workingtimes(this.workingtimes.length, date);
       }
     },
-
     m_trouver_days(date) {
       var date_format = new Date(date);
       this.day = date_format.getDay();
     },
-
     sommer_workingtimes(size_objects, date) {
       this.m_trouver_days(date);
       var jour_counter = this.day;
@@ -184,7 +182,6 @@ export default {
             this.endhour = this.endDate.substr(11, 5);
             this.resterHeures(this.starthour, this.endhour);
             this.sommerHeures(this.heures_jour, this.rest);
-
             switch (ii) {
               case 1:
                 this.days.lundi = this.heures_jour;
@@ -204,13 +201,11 @@ export default {
             }
           }
         }
-
         this.rester_date(co);
         co++;
         this.date_convertion_nouvelle(this.date_actuelle_2);
         this.heures_jour = "00:00";
       }
-
       this.total_semaine =
         parseFloat(this.days.lundi) +
         parseFloat(this.days.mardi) +
@@ -221,97 +216,73 @@ export default {
     sommerHeures_totalsemaine(heure1, heure2) {
       var Minutes1 = parseInt(heure1.substr(3, 2));
       var Heures1 = parseInt(heure1.substr(0, 2));
-
       var Minutes2 = parseInt(heure2.substr(3, 2));
       var Heures2 = parseInt(heure2.substr(0, 2));
-
       var Minutes_passes = Minutes2 + Minutes1;
       var Heures_passes = Heures2 + Heures1;
-
       if (Minutes_passes > 59) {
         Heures_passes++;
         Minutes_passes = Minutes_passes - 60;
       }
-
       var heures = Heures_passes.toString();
       var minutes = Minutes_passes.toString();
-
       if (heures.length < 2) {
         heures = "0" + heures;
       }
-
       if (minutes.length < 2) {
         minutes = "0" + minutes;
       }
       this.total_semaine = heures.toString() + "." + minutes.toString();
     },
-
     sommerHeures(heure1, heure2) {
       var Minutes1 = parseInt(heure1.substr(3, 2));
       var Heures1 = parseInt(heure1.substr(0, 2));
-
       var Minutes2 = parseInt(heure2.substr(3, 2));
       var Heures2 = parseInt(heure2.substr(0, 2));
-
       var Minutes_passes = Minutes2 + Minutes1;
       var Heures_passes = Heures2 + Heures1;
-
       if (Minutes_passes > 59) {
         Heures_passes++;
         Minutes_passes = Minutes_passes - 60;
       }
-
       var heures = Heures_passes.toString();
       var minutes = Minutes_passes.toString();
-
       if (heures.length < 2) {
         heures = "0" + heures;
       }
-
       if (minutes.length < 2) {
         minutes = "0" + minutes;
       }
       this.heures_jour = heures.toString() + "." + minutes.toString();
     },
-
     resterHeures(starthour, endhour) {
       var debut = starthour;
       var fin = endhour;
-
       var debutMinutes = parseInt(debut.substr(3, 2));
       var debutHeures = parseInt(debut.substr(0, 2));
-
       var finMinutes = parseInt(fin.substr(3, 2));
       var finHeures = parseInt(fin.substr(0, 2));
-
       var Minutes_passes = finMinutes - debutMinutes;
       var Heures_passes = finHeures - debutHeures;
-
       if (Minutes_passes < 0) {
         Heures_passes--;
         Minutes_passes = 60 + Minutes_passes;
       }
-
       var heures = Heures_passes.toString();
       var minutes = Minutes_passes.toString();
-
       if (heures.length < 2) {
         heures = "0" + heures;
       }
-
       if (minutes.length < 2) {
         minutes = "0" + minutes;
       }
-
       this.rest = heures + ":" + minutes;
     },
-
     rester_date(monto) {
       var date2 = new Date();
       date2.setDate(date2.getDate() - monto);
       this.date_actuelle_2 = date2;
     },
-
     date_actuelle_now() {
       var jour = "";
       var mois = "";
@@ -361,7 +332,6 @@ export default {
       this.date_actuelle = annee + "-" + mois + "-" + jour;
       //this.date_actuelle = "2021-11-10";
     },
-
     date_convertion_nouvelle(date_convertion) {
       var jour = "";
       var mois = "";
@@ -445,7 +415,6 @@ export default {
         )
         .then((response) => {
           console.log(response.data);
-          location.reload();
         })
         .catch((err) => console.log(err.message));
     },
@@ -501,5 +470,10 @@ export default {
 div #select {
   color: #6a66d8;
   font-size: 40px;
+}
+
+#chart-3 {
+  max-width: 150px;
+  margin: 0 auto;
 }
 </style>
