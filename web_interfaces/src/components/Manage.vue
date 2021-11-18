@@ -119,9 +119,9 @@
             </v-card>
           </v-dialog>
         </v-container>
-        <v-container class="mt-4 d-flex justify-space-around flex-wrap">
+        <v-container class="d-flex justify-center flex-wrap">
           <v-card
-            class="mb-4"
+            class="ma-4"
             width="250"
             :elevation="6"
             v-for="user in users"
@@ -130,8 +130,9 @@
             <v-card-title class="justify-center">{{
               user.username
             }}</v-card-title>
-            <v-card-actions>
-              <v-btn small class="ml-2" v-on:click="getUser(user.id)">
+            <v-card-subtitle class="mb-2">{{user.email}}</v-card-subtitle>
+            <v-card-actions class="justify-center">
+              <v-btn small v-on:click="getUser(user.id)">
                 <router-link class="link-router" :to="'/users/' + user.id"
                   >Show</router-link
                 >
