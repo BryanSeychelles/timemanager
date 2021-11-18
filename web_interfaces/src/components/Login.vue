@@ -1,26 +1,30 @@
 <template>
-  <v-card class="elevation-12">
-    <v-card-title>Login</v-card-title>
-    <v-card-text>
-      <v-form>
-        <v-text-field v-model="email" label="email"></v-text-field>
-        <v-text-field
-          v-model="password"
-          label="password"
-          :append-icon="value ? 'mdi-eye' : 'mdi-eye-off'"
-          @click:append="value = !value"
-          :type="value ? 'password' : 'text'"
-        ></v-text-field>
-        <v-col v-if="connection_error">
-          <p :style="{ color: '#f21e7e' }">The user does not exist.</p>
-        </v-col>
-      </v-form>
-    </v-card-text>
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn color="primary" @click="login()">Login</v-btn>
-    </v-card-actions>
-  </v-card>
+  <v-container style="height: 100vh;">
+    <v-row justify="center" class="align-center">
+      <v-card style="width: 100%;" class="mt-12 elevation-12">
+        <v-card-title>Login</v-card-title>
+        <v-card-text>
+          <v-form>
+            <v-text-field v-model="email" label="email"></v-text-field>
+            <v-text-field
+              v-model="password"
+              label="password"
+              :append-icon="value ? 'mdi-eye' : 'mdi-eye-off'"
+              @click:append="value = !value"
+              :type="value ? 'password' : 'text'"
+            ></v-text-field>
+            <v-col v-if="connection_error">
+              <p :style="{ color: '#f21e7e' }">The user does not exist.</p>
+            </v-col>
+          </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" @click="login()">Login</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -31,14 +35,15 @@ export default {
   name: "Login",
   data() {
     return {
-      path: "http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/users/sign_in",
+      path:
+        "http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/users/sign_in",
       token: "",
       redirect_path: "/users/",
       connection_error: false,
       value: true,
       user: null,
       email: "admin@gmail.com",
-      password: "12345678"
+      password: "12345678",
       /*rule_email: [
         e => !!e || "Required",
         e => /.+@.+\..+/.test(e) || "E-mail must be valid"
