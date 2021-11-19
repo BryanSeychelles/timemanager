@@ -38,7 +38,7 @@ export default {
       value: true,
       user: null,
       email: "admin@gmail.com",
-      password: "12345678"
+      password: "admin"
       /*rule_email: [
         e => !!e || "Required",
         e => /.+@.+\..+/.test(e) || "E-mail must be valid"
