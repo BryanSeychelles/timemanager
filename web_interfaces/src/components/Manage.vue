@@ -284,17 +284,6 @@ export default {
     //this.sommer_workingtimes(5,'2021-11-19');
   },
   methods: {
-<<<<<<< HEAD
-    getEmployees() {
-      axios
-        .get("http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/users/employees", {
-          headers: { Authorization: `Bearer ${this.token}` },
-        })
-        .then((response) => {
-          console.log(response.data.data);
-          this.employees = response.data.data;
-        });
-=======
     convertir_jourstotal_pour_joursmoyennes(size) {
       var size2 = size - 1;
       this.days_moyenne_wt.lundi =
@@ -307,7 +296,6 @@ export default {
         parseFloat(this.days_wt.jeudi) / parseFloat(size2);
       this.days_moyenne_wt.vendredi =
         parseFloat(this.days_wt.vendredi) / parseFloat(size2);
->>>>>>> master
     },
 
     m_trouver_days(date) {
