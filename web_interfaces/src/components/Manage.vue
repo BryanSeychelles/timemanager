@@ -241,7 +241,7 @@ export default {
       teams: [],
 
       //WorkingTimes variables
-      path_wt: "http://localhost:4000/api/workingtimes",
+      path_wt: "http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/workingtimes",
       user_id: "",
       days_wt: {
         lundi: "00:00",
@@ -540,7 +540,7 @@ export default {
 
     getEmployees() {
       axios
-        .get("http://localhost:4000/api/users/employees", {
+        .get("http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/users/employees", {
           headers: { Authorization: `Bearer ${this.token}` },
         })
         .then((response) => {

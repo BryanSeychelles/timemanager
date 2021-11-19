@@ -344,7 +344,7 @@ export default {
   methods: {
     async getUserByToken() {
       const response = await axios
-        .get("http://localhost:4000/api/users/", {
+        .get("http://" + process.env.VUE_APP_SERVICE_URL + ":4000/api/users/", {
           headers: { Authorization: `Bearer ${this.token}` },
         })
         .catch((error) => console.log(error));
